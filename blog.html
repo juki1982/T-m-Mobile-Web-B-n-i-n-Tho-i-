@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tech Store - Tin công nghệ</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand text-primary fw-bold fs-4" href="index.html">📱 Tech Store</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+        <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+        <li class="nav-item"><a class="nav-link" href="cart.html">Giỏ hàng</a></li>
+         <li class="nav-item"><a class="nav-link" href="blog.html">Bài viết</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Liên hệ</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- DANH SÁCH BÀI VIẾT -->
+<div class="container my-5">
+  <h3 class="mb-4 text-center">📰 Tin công nghệ mới nhất</h3>
+  <div class="row" id="blogRow">
+    <!-- Bài viết sẽ hiển thị ở đây -->
+  </div>
+</div>
+
+<!-- MODAL CHI TIẾT BÀI VIẾT -->
+<div class="modal fade" id="blogModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="blogModalTitle"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <img id="blogModalImage" src="" class="img-fluid mb-3" alt="Ảnh bài viết">
+        <p id="blogModalContent"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="text-center p-3 bg-white shadow-sm mt-5">
+  © 2025 Tech Store - Điện thoại chính hãng
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+// Dữ liệu bài viết
+const BLOG_POSTS = [
+  {
+    id: 1,
+    title: "iPhone 17 ra mắt: Công nghệ đột phá",
+    image: "https://cdn1.viettelstore.vn/Images/Product/ProductImage/444965480.jpeg",
+    content: "iPhone 17 mang nhiều cải tiến mạnh mẽ về camera, hiệu năng và pin..."
+  },
+  {
+    id: 2,
+    title: "Samsung Galaxy S24 Ultra: Màn hình ấn tượng",
+    image: "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/s/s/ss-s24-ultra-xam-222.png",
+    content: "Samsung Galaxy S24 Ultra sở hữu màn hình AMOLED 6.8 inch sắc nét..."
+  },
+  {
+    id: 3,
+    title: "Xiaomi 14 Pro: Giá rẻ nhưng mạnh mẽ",
+    image: "https://bizweb.dktcdn.net/thumb/large/100/257/835/products/xiaomi-14-4.jpg?v=1736845026300",
+    content: "Xiaomi 14 Pro tiếp tục đánh bại các đối thủ nhờ Snapdragon 8 Gen 3..."
+  },
+  {
+    id: 4,
+    title: "OPPO Find X7: Thiết kế sang trọng",
+    image: "https://sonpixel.vn/wp-content/uploads/2024/07/oppo-find-x7-ultra-13.webp",
+    content: "OPPO Find X7 với thiết kế mỏng nhẹ, camera 200MP và sạc siêu nhanh..."
+  },
+  {
+    id: 5,
+    title: "Vivo X100: Hiệu năng vượt trội",
+    image: "https://cdn.viettablet.com/images/detailed/59/vivo-x100-ultra-1.jpg",
+    content: "Vivo X100 trang bị chip mới, pin dung lượng lớn và màn hình AMOLED..."
+  },
+  {
+    id: 6,
+    title: "OnePlus 12 Pro: Hỗ trợ 5G nhanh",
+    image: "https://sonpixel.vn/wp-content/uploads/2023/12/2-2.jpg",
+    content: "OnePlus 12 Pro mang đến trải nghiệm mượt mà, sạc nhanh và camera AI..."
+  },
+  {
+    id: 7,
+    title: "Realme GT Neo 5: Gaming mạnh mẽ",
+    image: "https://demobile.vn/wp-content/uploads/2023/06/realme-gt-neo-5-12-256-new-openbox-1.png",
+    content: "Realme GT Neo 5 tối ưu trải nghiệm chơi game với màn hình 120Hz..."
+  },
+  {
+    id: 8,
+    title: "Apple Watch Series 9: Cập nhật sức khỏe",
+    image: "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/a/p/apple-watch-series-9-45mm-_10_.png",
+    content: "Apple Watch Series 9 hỗ trợ đo huyết áp, ECG và theo dõi giấc ngủ chính xác..."
+  },
+  {
+    id: 9,
+    title: "Samsung Galaxy Buds 3: Âm thanh sống động",
+    image: "https://cdn2.cellphones.com.vn/insecure/rs:fill:0:358/q:90/plain/https://cellphones.com.vn/media/catalog/product/t/a/tai-nghe-samsung-galaxy-buds-3-pro_9_.png",
+    content: "Tai nghe không dây Samsung Galaxy Buds 3 mang đến âm thanh chất lượng cao..."
+  },
+  {
+    id: 10,
+    title: "Xiaomi Pad 6: Tablet giá tốt",
+    image: "https://bizweb.dktcdn.net/thumb/large/100/257/835/products/xiaomi-mi-pad-6-den-jpg.png?v=1697511603730",
+    content: "Xiaomi Pad 6 trang bị chip mạnh mẽ, màn hình lớn và hỗ trợ bút cảm ứng..."
+  },
+  {
+    id: 11,
+    title: "Google Pixel 9: Android mới nhất",
+    image: "https://sonpixel.vn/wp-content/uploads/2024/02/Google-Pixel-9-Pro-Hong.webp",
+    content: "Google Pixel 9 đi kèm Android 16, camera AI và khả năng chụp đêm xuất sắc..."
+  },
+  {
+    id: 12,
+    title: "Huawei Mate 60 Pro: Camera AI vượt trội",
+    image: "https://cdn2.cellphones.com.vn/x/media/catalog/product/h/u/huawei-mate-60-pro_1_.png",
+    content: "Huawei Mate 60 Pro với camera AI 200MP, pin 5000mAh và màn hình OLED cong..."
+  }
+];
+
+// Hiển thị danh sách bài viết
+function renderBlogs() {
+  const row = $('#blogRow');
+  row.empty();
+  BLOG_POSTS.forEach(post => {
+    const card = `
+      <div class="col-sm-6 col-md-4 mb-4">
+        <div class="card h-100 shadow-sm blog-card" data-id="${post.id}">
+          <img src="${post.image}" class="card-img-top" style="height:180px;object-fit:cover;">
+          <div class="card-body d-flex flex-column">
+            <h6 class="card-title">${post.title}</h6>
+            <button class="btn btn-outline-primary mt-auto view-blog" data-id="${post.id}">Xem chi tiết</button>
+          </div>
+        </div>
+      </div>`;
+    row.append(card);
+  });
+}
+
+// Hiển thị modal khi bấm xem bài viết
+$(document).on('click','.view-blog', function() {
+  const id = $(this).data('id');
+  const post = BLOG_POSTS.find(p => p.id == id);
+  if(!post) return;
+
+  $('#blogModalTitle').text(post.title);
+  $('#blogModalImage').attr('src', post.image);
+  $('#blogModalContent').text(post.content);
+
+  const modal = new bootstrap.Modal(document.getElementById('blogModal'));
+  modal.show();
+});
+
+$(function(){
+  renderBlogs();
+});
+</script>
+</body>
+</html>
+</script>
+<footer class="bg-dark text-white pt-5 pb-3">
+  <div class="container">
+    <div class="row">
+
+      <!-- Thông tin cửa hàng -->
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold">Tech Store</h5>
+        <p>📍 Địa chỉ: 122/24,Tổ 23 Khu Phố 2a Phường Long Bình, Thành Phố Biên Hòa, Đồng Nai</p>
+        <p>📞 Điện thoại: 0375 126 141</p>
+        <p>✉ Email: quangtam632006@gmail.com</p>
+      </div>
+
+      <!-- Liên kết nhanh -->
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold">Liên kết nhanh</h5>
+        <ul class="list-unstyled">
+          <li><a href="index.html" class="text-white text-decoration-none">Trang chủ</a></li>
+          <li><a href="products.html" class="text-white text-decoration-none">Sản phẩm</a></li>
+          <li><a href="contact.html" class="text-white text-decoration-none">Liên hệ</a></li>
+          <li><a href="cart.html" class="text-white text-decoration-none">Giỏ hàng</a></li>
+          <li><a href="#news" class="text-white text-decoration-none">Tin công nghệ</a></li>
+        </ul>
+      </div>
+
+      <!-- Mạng xã hội -->
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold">Kết nối với chúng tôi</h5>
+        <a href="#" class="text-white me-3 fs-5"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="text-white me-3 fs-5"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="text-white me-3 fs-5"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="text-white me-3 fs-5"><i class="bi bi-youtube"></i></a>
+      </div>
+
+    </div>
+
+    <hr class="border-light">
+
+    <div class="text-center">
+      &copy; 2025 Tech Store. Bản quyền thuộc về Tech Store.
+    </div>
+  </div>
+</footer>
+<!-- Lưu ý: để icon mạng xã hội hoạt động, cần thêm Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">

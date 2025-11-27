@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tech Store - Liên hệ</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .contact-container { max-width: 700px; margin: 50px auto; }
+    .success-msg { display: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand text-primary fw-bold fs-4" href="index.html">📱 Tech Store</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Trang chủ</a></li>
+        <li class="nav-item"><a class="nav-link" href="products.html">Sản phẩm</a></li>
+        <li class="nav-item"><a class="nav-link" href="cart.html">Giỏ hàng</a></li>
+        <li class="nav-item"><a class="nav-link" href="blog.html">Bài viết</a></li>
+        <li class="nav-item"><a class="nav-link active" href="contact.html">Liên hệ</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- FORM LIÊN HỆ -->
+<div class="container contact-container">
+  <h2 class="mb-4 text-center">📬 Liên hệ với chúng tôi</h2>
+
+  <div class="alert alert-success success-msg" role="alert">
+    ✅ Tin nhắn của bạn đã được gửi thành công!
+  </div>
+
+  <form id="contactForm" class="shadow p-4 rounded bg-light">
+    <div class="mb-3">
+      <label for="name" class="form-label">Họ và tên</label>
+      <input type="text" class="form-control" id="name" placeholder="Nhập họ và tên" required>
+      <div class="invalid-feedback">Vui lòng nhập họ và tên.</div>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="email" class="form-control" id="email" placeholder="Nhập email" required>
+      <div class="invalid-feedback">Vui lòng nhập email hợp lệ.</div>
+    </div>
+    <div class="mb-3">
+      <label for="subject" class="form-label">Chủ đề</label>
+      <input type="text" class="form-control" id="subject" placeholder="Nhập chủ đề" required>
+      <div class="invalid-feedback">Vui lòng nhập chủ đề.</div>
+    </div>
+    <div class="mb-3">
+      <label for="message" class="form-label">Nội dung</label>
+      <textarea class="form-control" id="message" rows="5" placeholder="Nhập nội dung" required></textarea>
+      <div class="invalid-feedback">Vui lòng nhập nội dung.</div>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Gửi tin nhắn</button>
+  </form>
+</div>
+
+<footer class="text-center p-3 bg-white shadow-sm mt-5">
+  © 2025 Tech Store - Điện thoại chính hãng
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const form = document.getElementById('contactForm');
+const successMsg = document.querySelector('.success-msg');
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  // Kiểm tra hợp lệ form
+  if (!form.checkValidity()) {
+    form.classList.add('was-validated');
+    return;
+  }
+
+  // Lấy dữ liệu
+  const data = {
+    name: form.name.value.trim(),
+    email: form.email.value.trim(),
+    subject: form.subject.value.trim(),
+    message: form.message.value.trim(),
+    date: new Date().toLocaleString()
+  };
+
+  // Lưu vào localStorage (giả lập gửi server)
+  let messages = JSON.parse(localStorage.getItem('techstore_messages') || '[]');
+  messages.push(data);
+  localStorage.setItem('techstore_messages', JSON.stringify(messages));
+
+  // Hiển thị thông báo thành công
+  successMsg.style.display = 'block';
+  form.reset();
+  form.classList.remove('was-validated');
+});
+</script>
+</body>
+</html>
+</script>
+<footer class="bg-dark text-white pt-5 pb-3">
+  <div class="container">
+    <div class="row">
+
+      <!-- Thông tin cửa hàng -->
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold">Tech Store</h5>
+        <p>📍 Địa chỉ: 122/24,Tổ 23 Khu Phố 2a Phường Long Bình, Thành Phố Biên Hòa, Đồng Nai</p>
+        <p>📞 Điện thoại: 0375 126 141</p>
+        <p>✉ Email: quangtam632006@gmail.com</p>
+      </div>
+
+      <!-- Liên kết nhanh -->
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold">Liên kết nhanh</h5>
+        <ul class="list-unstyled">
+          <li><a href="index.html" class="text-white text-decoration-none">Trang chủ</a></li>
+          <li><a href="products.html" class="text-white text-decoration-none">Sản phẩm</a></li>
+          <li><a href="contact.html" class="text-white text-decoration-none">Liên hệ</a></li>
+          <li><a href="cart.html" class="text-white text-decoration-none">Giỏ hàng</a></li>
+          <li><a href="#news" class="text-white text-decoration-none">Tin công nghệ</a></li>
+        </ul>
+      </div>
+
+      <!-- Mạng xã hội -->
+      <div class="col-md-4 mb-4">
+        <h5 class="fw-bold">Kết nối với chúng tôi</h5>
+        <a href="#" class="text-white me-3 fs-5"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="text-white me-3 fs-5"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="text-white me-3 fs-5"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="text-white me-3 fs-5"><i class="bi bi-youtube"></i></a>
+      </div>
+
+    </div>
+
+    <hr class="border-light">
+
+    <div class="text-center">
+      &copy; 2025 Tech Store. Bản quyền thuộc về Tech Store.
+    </div>
+  </div>
+</footer>
+<!-- Lưu ý: để icon mạng xã hội hoạt động, cần thêm Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
